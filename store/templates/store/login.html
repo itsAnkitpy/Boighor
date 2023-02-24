@@ -1,0 +1,40 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="my_account_area pt--80 pb--55 bg--white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="my__account__wrapper">
+                    <h3 class="account__title">Login</h3>
+                    <form action="#" method="POST" class="auth-validate-form">
+                        {% csrf_token %}
+                        <div class="account__form">
+                            <div class="input__box">
+                                <label>Username<span>*</span></label>
+                                <input type="text" name="user">
+                            </div>
+                            <div class="input__box">
+                                <label>Password<span>*</span></label>
+                                <input type="password" name="pass" name="pass">
+                            </div>
+                            <div class="form__btn">
+                                <button type="submit">Login</button>
+                                <label class="label-for-checkbox">
+                                    <input id="rememberme" class="input-checkbox" name="rememberme"
+                                           value="forever" type="checkbox">
+                                    <span>Remember me</span>
+                                </label>
+                            </div>
+                            <a class="forget_pass" href="#">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

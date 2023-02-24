@@ -1,0 +1,248 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="maincontent bg--white pt--80 pb--55">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-12">
+                <div class="wn__single__product">
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <div class="wn__fotorama__wrapper">
+                                <div class="fotorama wn__fotorama__action" data-nav="thumbs">
+                                    <a href="1.html"><img src="{{ book.coverpage.url }}" alt=""></a>
+                                    <a href="2.html"><img src="{{ book.coverpage.url }}" alt=""></a>
+                                    <a href="3.html"><img src="{{ book.coverpage.url }}" alt=""></a>
+                                    <a href="4.html"><img src="{{ book.coverpage.url }}" alt=""></a>
+                                    <a href="5.html"><img src="{{ book.coverpage.url }}" alt=""></a>
+                                    <a href="6.html"><img src="{{ book.coverpage.url }}" alt=""></a>
+                                    <a href="7.html"><img src="{{ book.coverpage.url }}" alt=""></a>
+                                    <a href="8.html"><img src="{{ book.coverpage.url }}" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <div class="product__info__main">
+                                <h1>{{ book.name }}</h1>
+                                <h4><a href="{% url 'store:writer' id=book.writer.id %}">By {{ book.writer}}</a></h4>
+                                <div class="product-reviews-summary d-flex">
+                                    <ul class="rating-summary d-flex">
+                                        <li><i class="zmdi zmdi-star-outline"></i></li>
+                                        <li><i class="zmdi zmdi-star-outline"></i></li>
+                                        <li><i class="zmdi zmdi-star-outline"></i></li>
+                                        <li class="off"><i class="zmdi zmdi-star-outline"></i></li>
+                                        <li class="off"><i class="zmdi zmdi-star-outline"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price-box">
+                                    <span>&#8377;{{book.price}}</span>
+                                </div>
+                                <div class="product__overview">
+                                    <p>{{book.description}}</p>
+                                    
+                                </div>
+                                <div class="box-tocart d-flex">
+                                    <span>Qty</span>
+                                    <input id="qty" class="input-text qty" name="qty" min="1" value="1"
+                                           title="Qty" type="number">
+                                    <div class="addtocart__actions">
+                                        <button class="tocart" type="submit" title="Add to Cart">Add to
+                                            Cart
+                                        </button>
+                                    </div>
+                                    <div class="product-addto-links clearfix">
+                                        <a class="wishlist" href="#"></a>
+                                        <a class="compare" href="#"></a>
+                                    </div>
+                                </div>
+                                <div class="product_meta">
+                                        <span class="posted_in">Category:
+                                            <a href="#">{{book.category}}</a>
+                                            
+                                        </span>
+                                </div>
+                                <div class="product-share">
+                                    <ul>
+                                        <li class="categories-title">Share :</li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="icon-social-twitter icons"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="icon-social-tumblr icons"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="icon-social-facebook icons"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="icon-social-linkedin icons"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product__info__detailed">
+                    <div class="pro_details_nav nav justify-content-start" role="tablist">
+                        <a class="nav-item nav-link active" data-bs-toggle="tab" href="#nav-details"
+                           role="tab">Details</a>
+                        <a class="nav-item nav-link" data-bs-toggle="tab" href="#nav-review" role="tab">Reviews</a>
+                    </div>
+                    <div class="tab__container tab-content">
+                        <!-- Start Single Tab Content -->
+                        <div class="pro__tab_label tab-pane fade show active" id="nav-details" role="tabpanel">
+                            <div class="description__attribute">
+                                <p>{{book.description}}</p>
+                                
+                            </div>
+                        </div>
+                        <!-- End Single Tab Content -->
+                        <!-- Start Single Tab Content -->
+                        <div class="pro__tab_label tab-pane fade" id="nav-review" role="tabpanel">
+                            
+                            <div class="review-fieldset">
+                                <h2>You're reviewing:</h2>
+                                <h3>{{ book.name }}</h3>
+                                <div class="review-field-ratings">
+                                    <div class="product-review-table">
+                                        
+                                    </div>
+                                </div>
+
+
+                                <div class="review_form_field">
+                                    <form action="" method="POST" class="needs-validation" novalidate="">
+                                        {% csrf_token %}
+                                     
+                                         <div class="form-group">
+                                             {{ form.review_star|as_crispy_field }}
+                                         </div>
+                                         <div class="form-group">
+                                            
+                                             {{ form.review_text|as_crispy_field }}
+                                         </div>
+                                         <br>
+                                         <div class="form-group input__box">
+                                             <button class="btn btn-warning" type="submit" style="color: #fff">Submit </button>
+                                         </div>
+                                    </form>	
+                                    
+                                    
+                                    {% for lreview in rreview %}
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <img src="{% static 'images/profile.png' %}"/>
+                                                <b> {{ lreview.customer }} </b>
+                                                <div class='rating'>
+                                                    {{ lreview.review_star }}
+                                                </div>
+                                                <div class="given_review_date">
+                                                    <span style="color:#555;"> {{ lreview.created }}</span>
+                                                </div>
+                                                <p style="margin-top: 10px"> {{ lreview.review_text }} </p>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Single Tab Content -->
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-lg-3 col-12 md-mt-40 sm-mt-40">
+                <div class="shop__sidebar">
+                    <aside class="widget__categories products--cat">
+                        <h3 class="widget__title">Product Categories</h3>
+                        <ul>
+                            <li><a href="#">Biography <span>(3)</span></a></li>
+                            <li><a href="#">Business <span>(4)</span></a></li>
+                            <li><a href="#">Cookbooks <span>(6)</span></a></li>
+                            <li><a href="#">Health & Fitness <span>(7)</span></a></li>
+                            <li><a href="#">History <span>(8)</span></a></li>
+                            <li><a href="#">Mystery <span>(9)</span></a></li>
+                            <li><a href="#">Inspiration <span>(13)</span></a></li>
+                            <li><a href="#">Romance <span>(20)</span></a></li>
+                            <li><a href="#">Fiction/Fantasy <span>(22)</span></a></li>
+                            <li><a href="#">Self-Improvement <span>(13)</span></a></li>
+                            <li><a href="#">Humor Books <span>(17)</span></a></li>
+                            <li><a href="#">Harry Potter <span>(20)</span></a></li>
+                            <li><a href="#">Land of Stories <span>(34)</span></a></li>
+                            <li><a href="#">Kids' Music <span>(60)</span></a></li>
+                            <li><a href="#">Toys & Games <span>(3)</span></a></li>
+                            <li><a href="#">hoodies <span>(3)</span></a></li>
+                        </ul>
+                    </aside>
+                    <aside class="widget__categories pro--range">
+                        <h3 class="widget__title">Filter by price</h3>
+                        <div class="content-shopby">
+                            <div class="price_filter s-filter clear">
+                                <form action="#" method="GET">
+                                    <div id="slider-range"></div>
+                                    <div class="slider__range--output">
+                                        <div class="price__output--wrap">
+                                            <div class="price--output">
+                                                <span>Price :</span><input type="text" id="amount" readonly="">
+                                            </div>
+                                            <div class="price--filter">
+                                                <a href="#">Filter</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </aside>
+                    <aside class="widget__categories products--compare">
+                        <h3 class="widget__title">Compare</h3>
+                        <ul>
+                            <li><a href="#">x</a><a href="#">Condimentum posuere</a></li>
+                            <li><a href="#">x</a><a href="#">Condimentum posuere</a></li>
+                            <li><a href="#">x</a><a href="#">Dignissim venenatis</a></li>
+                        </ul>
+                    </aside>
+                    <aside class="widget__categories products--tag">
+                        <h3 class="widget__title">Product Tags</h3>
+                        <ul>
+                            <li><a href="#">Biography</a></li>
+                            <li><a href="#">Business</a></li>
+                            <li><a href="#">Cookbooks</a></li>
+                            <li><a href="#">Health & Fitness</a></li>
+                            <li><a href="#">History</a></li>
+                            <li><a href="#">Mystery</a></li>
+                            <li><a href="#">Inspiration</a></li>
+                            <li><a href="#">Religion</a></li>
+                            <li><a href="#">Fiction</a></li>
+                            <li><a href="#">Fantasy</a></li>
+                            <li><a href="#">Music</a></li>
+                            <li><a href="#">Toys</a></li>
+                            <li><a href="#">Hoodies</a></li>
+                        </ul>
+                    </aside>
+                    <aside class="widget__categories sidebar--banner">
+                        <img src="images/others/banner_left.jpg" alt="banner images">
+                        <div class="text">
+                            <h2>new products</h2>
+                            <h6>save up to <br> <strong>40%</strong>off</h6>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
